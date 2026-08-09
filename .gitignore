@@ -1,0 +1,35 @@
+# Build directories
+build/
+out/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+install_manifest.txt
+compile_commands.json
+
+# Visual Studio / MSVC
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.suo
+*.user
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# Executables / libraries
+*.exe
+*.dll
+*.lib
+*.exp
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+Desktop.ini
