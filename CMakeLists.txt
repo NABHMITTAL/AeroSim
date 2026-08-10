@@ -12,4 +12,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(AeroSIM
     src/main.cpp
+    src/core/Application.cpp
+    src/core/Application.h
+    src/math/vector3.cpp
+    src/math/vector3.h
 )
