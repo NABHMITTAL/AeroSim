@@ -1,82 +1,110 @@
 # AeroSIM
 
-AeroSIM is a C++-based aerodynamic simulation and visualization project designed to eventually provide a complete virtual wind-tunnel environment.
+A C++ aerodynamic simulation and visualization project evolving toward a virtual wind-tunnel environment.
 
-The long-term goal is to allow users to:
+The long-term goal is to build a system capable of creating aerodynamic geometry, simulating airflow, calculating aerodynamic forces, and visualizing the resulting flow and physics in 3D.
 
-* Build and modify aerodynamic components.
-* Create and manipulate 3D geometry.
-* Configure wind-tunnel conditions.
-* Simulate airflow around objects.
-* Analyze aerodynamic forces and flow behavior.
-* Modify geometry and simulation parameters in real time.
-* Visualize simulation results in 3D.
-* Utilize GPU acceleration for computationally intensive simulations.
+## Vision
+
+AeroSIM is planned to eventually support:
+
+- 3D aerodynamic geometry creation and manipulation
+- Configurable wind-tunnel conditions
+- Airflow simulation
+- Aerodynamic force and flow analysis
+- Real-time modification of geometry and simulation parameters
+- 3D visualization of simulation results
+- GPU acceleration for computationally intensive workloads
 
 ## Current Status
 
-AeroSIM is currently in the foundational development stage.
+AeroSIM is currently in its **mathematical foundation stage**.
 
-### Completed
+The current focus is building and testing the low-level mathematics that future geometry, physics, and simulation systems will depend on.
 
-#### Vector3 Math Foundation
+### Math Foundation
 
-The initial 3D vector mathematics layer has been implemented and tested.
+#### Vector3
 
-`Vector3` currently supports:
+The initial 3D vector implementation is complete.
 
-* Addition
-* Subtraction
-* Scalar multiplication
-* Scalar division
-* Magnitude
-* Normalization
-* Dot product
-* Cross product
+Supports:
+
+- Addition and subtraction
+- Scalar multiplication and division
+- Magnitude and squared magnitude
+- Normalization
+- Dot product
+- Cross product
+- Distance and squared distance
+- Angle calculation
 
 #### Matrix3
 
-AeroSIM now includes a fully functional 3×3 matrix implementation.
+The 3×3 matrix implementation is complete.
 
-`Matrix3` curently supports:
+Supports:
 
-* Matrix addition and subtraction
-* Scalar multiplication and division
-* Matrix × Vector3
-* Matrix × Matrix
-* Determinant
-* Transpose
-* Inverse
-* X/Y/Z rotation matrices
+- Matrix addition and subtraction
+- Scalar multiplication and division
+- Matrix × Vector3
+- Matrix × Matrix
+- Determinant
+- Transpose
+- Inverse
+- X/Y/Z rotation matrices
 
-`Rotation angles use radians and follow the standard right-handed coordinate convention`
+#### Vector2
 
-All currently implemented operations have been verified with basic runtime tests.
+The 2D vector implementation is complete.
 
-## Technology
+Supports:
 
-* **Language:** C++
-* **Build System:** CMake
-* **Build Tool:** Ninja
-* **Compiler:** Microsoft Visual C++ (MSVC)
-* **IDE:** Visual Studio Code
-* **Version Control:** Git / GitHub
+- Addition and subtraction
+- Scalar multiplication and division
+- Magnitude and squared magnitude
+- Normalization
+- Dot product
+- 2D cross product
+- Distance and squared distance
+- Angle calculation
 
-## Project Direction
+#### Matrix2
 
-The project will be developed incrementally, starting with reliable mathematical and software foundations before moving into geometry, physics, numerical simulation, visualization, and GPU acceleration.
+The 2×2 matrix implementation is complete.
 
-The planned architecture will eventually separate concerns such as:
+Supports:
 
+- Matrix addition and subtraction
+- Scalar multiplication and division
+- Matrix × Vector2
+- Matrix × Matrix
+- Determinant
+- Transpose
+- Inverse
+- 2D rotation matrix
 
-* Core
-* Math
-* Geometry
-* Physics
-* Aerodynamics
-* Simulation
-* Rendering
-* GPU
-* Application
+Rotation matrices use **radians** and follow the **standard right-handed coordinate convention**.
 
-The priority is correctness and a maintainable architecture first, followed by performance optimization and GPU acceleration where it provides meaningful benefits.
+All currently implemented mathematical operations are verified through runtime tests.
+
+## Development
+
+AeroSIM is being developed incrementally, with correctness and understanding taking priority over premature optimization.
+
+The planned development direction is:
+
+```text
+Mathematics
+    ↓
+Geometry
+    ↓
+Physics
+    ↓
+Aerodynamics
+    ↓
+Simulation
+    ↓
+Visualization
+    ↓
+GPU Acceleration

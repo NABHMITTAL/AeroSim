@@ -1,41 +1,83 @@
 # Changelog
 
-All notable changes to AeroSIM will be documented in this file.
+All notable changes to AeroSIM are documented here.
 
-## [v0.1.1] - Matrix3
-
-### Added
-* Added `Matrix3` 3×3 matrix type.
-* Added matrix addition and subtraction.
-* Added scalar multiplication and division.
-* Added Matrix3 × Vector3 multiplication.
-* Added Matrix3 × Matrix3 multiplication.
-* Added determinant calculation.
-* Added matrix transpose.
-* Added matrix inverse using cofactors and adjugate.
-* Added X, Y, and Z axis rotation matrices.
-* Added division-by-zero handling.
-* Added Matrix3 validation through identity/inverse and rotation tests.
-
-## [v0.1.0]
+## [0.1.2] - Vector2 and Matrix2
 
 ### Added
 
-* Implemented the core `Vector3` mathematical type.
-* Added `x`, `y`, and `z` floating-point components.
-* Added vector addition.
-* Added vector subtraction.
-* Added scalar multiplication.
-* Added scalar division.
-* Added vector magnitude calculation.
-* Added vector normalization.
-* Added dot product.
-* Added cross product.
-* Added basic console-based Vector3 verification tests.
+#### Vector2
+- Added 2D vector type.
+- Added vector addition and subtraction.
+- Added scalar multiplication and division.
+- Added magnitude and squared magnitude.
+- Added normalization.
+- Added dot product.
+- Added 2D cross product.
+- Added distance and squared distance.
+- Added angle calculation.
+- Added division-by-zero handling.
 
-### Verified
+#### Matrix2
+- Added 2×2 matrix type.
+- Added matrix addition and subtraction.
+- Added scalar multiplication and division.
+- Added Matrix2 × Vector2 multiplication.
+- Added Matrix2 × Matrix2 multiplication.
+- Added determinant calculation.
+- Added transpose.
+- Added matrix inverse.
+- Added 2D rotation matrix.
+- Added division-by-zero handling.
 
-* Vector arithmetic produces expected results.
-* Vector magnitude and normalization produce expected results.
-* Dot product produces expected results.
-* Cross product produces expected results.
+### Testing
+- Verified Vector2 operations through runtime tests.
+- Verified Matrix2 operations through runtime tests.
+- Verified matrix inversion using `A × A⁻¹ = I`.
+- Verified 90° 2D rotation behavior.
+
+---
+
+## [0.1.1] - Matrix3
+
+### Added
+
+#### Matrix3
+- Added 3×3 matrix type.
+- Added matrix addition and subtraction.
+- Added scalar multiplication and division.
+- Added Matrix3 × Vector3 multiplication.
+- Added Matrix3 × Matrix3 multiplication.
+- Added determinant calculation.
+- Added transpose.
+- Added matrix inverse using cofactors and the adjugate.
+- Added X/Y/Z rotation matrices.
+- Added division-by-zero handling.
+
+### Testing
+- Verified Matrix3 operations through runtime tests.
+- Verified matrix inversion using `A × A⁻¹ = I`.
+- Verified X/Y/Z rotation matrices.
+
+---
+
+## [0.1.0] - Initial Release
+
+### Added
+
+#### Vector3
+- Added initial 3D vector type.
+- Added vector addition and subtraction.
+- Added scalar multiplication and division.
+- Added magnitude and squared magnitude.
+- Added normalization.
+- Added dot product.
+- Added cross product.
+- Added distance and squared distance.
+- Added angle calculation.
+- Added division-by-zero handling.
+- Added zero-vector handling for normalization.
+
+### Foundation
+- Established the initial C++ mathematics foundation for AeroSIM.
+- Added basic project structure and development workflow.
