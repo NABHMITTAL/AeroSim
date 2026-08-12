@@ -22,4 +22,8 @@ add_executable(AeroSIM
     src/math/vector2.h
     src/math/matrix2.cpp
     src/math/matrix2.h
+    src/math/eularAngles.cpp
+    src/math/eularAngles.h
+    src/math/quaternion.cpp
+    src/math/quaternion.h
 )

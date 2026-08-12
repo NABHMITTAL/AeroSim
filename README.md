@@ -39,21 +39,6 @@ Supports:
 - Distance and squared distance
 - Angle calculation
 
-#### Matrix3
-
-The 3×3 matrix implementation is complete.
-
-Supports:
-
-- Matrix addition and subtraction
-- Scalar multiplication and division
-- Matrix × Vector3
-- Matrix × Matrix
-- Determinant
-- Transpose
-- Inverse
-- X/Y/Z rotation matrices
-
 #### Vector2
 
 The 2D vector implementation is complete.
@@ -68,6 +53,21 @@ Supports:
 - 2D cross product
 - Distance and squared distance
 - Angle calculation
+
+#### Matrix3
+
+The 3×3 matrix implementation is complete.
+
+Supports:
+
+- Matrix addition and subtraction
+- Scalar multiplication and division
+- Matrix × Vector3
+- Matrix × Matrix
+- Determinant
+- Transpose
+- Inverse
+- X/Y/Z rotation matrices
 
 #### Matrix2
 
@@ -84,7 +84,27 @@ Supports:
 - Inverse
 - 2D rotation matrix
 
-Rotation matrices use **radians** and follow the **standard right-handed coordinate convention**.
+#### Rotations
+
+AeroSIM now includes foundational rotation support using both Euler angles and quaternions.
+
+Euler-angle support includes:
+
+- Yaw, pitch, and roll
+- ZYX rotation convention
+- Euler-angle to rotation-matrix conversion
+- Rotation-order handling
+- Gimbal-lock considerations
+
+Quaternion support includes:
+
+- Quaternion representation
+- Quaternion magnitude
+- Quaternion normalization
+- Quaternion multiplication
+- Quaternion/vector rotation
+
+Rotation angles use **radians** and follow the **standard right-handed coordinate convention**.
 
 All currently implemented mathematical operations are verified through runtime tests.
 

@@ -2,6 +2,33 @@
 
 All notable changes to AeroSIM are documented here.
 
+## [0.1.3] - 2026-08-13
+
+### Added
+
+#### Euler Angles
+- Added yaw, pitch, and roll representation.
+- Added ZYX Euler rotation convention.
+- Added Euler-angle to rotation-matrix conversion.
+- Documented rotation order and right-handed coordinate conventions.
+
+#### Quaternions
+- Added quaternion representation.
+- Added quaternion magnitude calculation.
+- Added quaternion normalization.
+- Added quaternion multiplication.
+- Added quaternion/vector rotation.
+- Added runtime tests for quaternion rotation around the X, Y, and Z axes.
+
+### Verified
+
+- Quaternion normalization produces unit quaternions.
+- Quaternion multiplication produces expected results.
+- 90° quaternion rotations produce the expected axis transformations.
+- Quaternion rotations agree with the existing Matrix3 rotation conventions.
+
+---
+
 ## [0.1.2] - Vector2 and Matrix2
 
 ### Added
