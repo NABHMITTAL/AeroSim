@@ -2,7 +2,22 @@
 
 All notable changes to AeroSIM will be documented in this file.
 
-## [Unreleased]
+## [v0.1.1] - Matrix3
+
+### Added
+* Added `Matrix3` 3×3 matrix type.
+* Added matrix addition and subtraction.
+* Added scalar multiplication and division.
+* Added Matrix3 × Vector3 multiplication.
+* Added Matrix3 × Matrix3 multiplication.
+* Added determinant calculation.
+* Added matrix transpose.
+* Added matrix inverse using cofactors and adjugate.
+* Added X, Y, and Z axis rotation matrices.
+* Added division-by-zero handling.
+* Added Matrix3 validation through identity/inverse and rotation tests.
+
+## [v0.1.0]
 
 ### Added
 

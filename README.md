@@ -34,6 +34,23 @@ The initial 3D vector mathematics layer has been implemented and tested.
 * Dot product
 * Cross product
 
+#### Matrix3
+
+AeroSIM now includes a fully functional 3×3 matrix implementation.
+
+`Matrix3` curently supports:
+
+* Matrix addition and subtraction
+* Scalar multiplication and division
+* Matrix × Vector3
+* Matrix × Matrix
+* Determinant
+* Transpose
+* Inverse
+* X/Y/Z rotation matrices
+
+`Rotation angles use radians and follow the standard right-handed coordinate convention`
+
 All currently implemented operations have been verified with basic runtime tests.
 
 ## Technology

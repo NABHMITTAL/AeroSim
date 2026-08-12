@@ -1,5 +1,8 @@
 #include "Vector3.h"
 #include <cmath>
+#include <stdexcept>
+#include <algorithm>
+
 namespace aerosim{
   Vector3 Vector3::operator+(const Vector3& other) const{
     return{
@@ -27,11 +30,15 @@ namespace aerosim{
   }
 
   Vector3 Vector3::operator/(const float scaler) const{
-    return{
-      x/scaler,
-      y/scaler,
-      z/scaler
-    };
+    if(scaler != 0){
+      return{
+        x/scaler,
+        y/scaler,
+        z/scaler
+      };
+    }else{
+      throw std::runtime_error("Divide by 0");
+    }
   }
 
   float Vector3::magnitude() const{
@@ -50,11 +57,15 @@ namespace aerosim{
 
   Vector3 Vector3::normalized() const{
     float mag = this->magnitude();
-    return{
-      x/mag,
-      y/mag,
-      z/mag
-    };
+    if(mag != 0.0f){
+      return{
+        x/mag,
+        y/mag,
+        z/mag
+      };
+    }else{
+      return {0,0,0};
+    }
   }
 
   float Vector3::dot(const Vector3& other) const{
@@ -69,6 +80,25 @@ namespace aerosim{
     float Y = -(x*other.z - z*other.x);
     float Z = x*other.y - y*other.x;
     return{X,Y,Z};
+  }
+
+  float Vector3::distanceSquared(const Vector3& other) const{
+    aerosim::Vector3 sub = other - *this;
+    return {
+      sub.x*sub.x +
+      sub.y*sub.y +
+      sub.z*sub.z
+    };
+  }
+
+  float Vector3::distance(const Vector3& other) const{
+    return {std::sqrt(this->distanceSquared(other))};
+  }
+
+  float Vector3::angleBetween(const Vector3& other) const{
+    float cosine = this->dot(other)/(this->magnitude()*other.magnitude());
+    cosine = std::clamp(cosine, -1.0f, 1.0f);
+    return std::acos(cosine);
   }
   
 }

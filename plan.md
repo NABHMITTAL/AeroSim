@@ -79,10 +79,10 @@ Everything else depends on this phase.
 
 ## Work
 
-### Vectors
+### Vectors (Finished 3d Vector 2d and 4d will be implemented later)
 
 * Vector2
-* Vector3
+* Vector3 
 * Vector4
 * Addition
 * Subtraction
@@ -93,7 +93,7 @@ Everything else depends on this phase.
 * Dot product
 * Cross product
 
-### Matrices
+### Matrices (Finished 3d Matrix 2d and 4d will be implemented later)
 
 * Matrix2
 * Matrix3

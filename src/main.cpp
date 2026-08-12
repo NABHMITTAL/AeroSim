@@ -1,50 +1,55 @@
 #include "core/Application.h"
 #include "math/vector3.h"
 #include <iostream>
+#include "math/matrix3.h"
 
 int main(){
     aerosim::Application application;
     application.run();
 
-    aerosim::Vector3 a{3.0f, 4.0f, 0.0f}; 
-    aerosim::Vector3 b{1.0f, 2.0f, 3.0f}; 
-    aerosim::Vector3 addition = a + b; 
-    aerosim::Vector3 subtraction = a - b; 
-    aerosim::Vector3 multiplication = a * 2.0f; 
-    aerosim::Vector3 division = a / 2.0f; 
-    aerosim::Vector3 normalized = a.normalized(); 
-    float magnitude = a.magnitude(); 
-    float dot = a.dot(b); 
-    aerosim::Vector3 cross = a.cross(b); 
-    std::cout << "Addition: (" 
-        << addition.x << ", " 
-        << addition.y << ", " 
-        << addition.z << ")\n"; 
+    aerosim::Matrix3 matrix;
+    matrix.data[0][0] = 1.0f;
+    matrix.data[0][1] = 2.0f;
+    matrix.data[0][2] = 3.0f;
 
-    std::cout << "Subtraction: (" 
-        << subtraction.x << ", " 
-        << subtraction.y << ", " 
-        << subtraction.z << ")\n"; 
-        std::cout << "Multiplication: (" 
-        << multiplication.x << ", " 
-        << multiplication.y << ", " 
-        << multiplication.z << ")\n"; 
-        std::cout << "Division: (" 
-        << division.x << ", " 
-        << division.y << ", " 
-        << division.z << ")\n"; 
-        std::cout << "Magnitude: " 
-        << magnitude << "\n"; std::cout 
-        << "Normalized: (" 
-        << normalized.x << ", " 
-        << normalized.y << ", " 
-        << normalized.z << ")\n"; 
-        std::cout << "Dot: " << dot << "\n"; 
-        std::cout << "Cross: (" 
-        << cross.x << ", " 
-        << cross.y << ", " 
-        << cross.z << ")\n";
-    
+    matrix.data[1][0] = 0.0f;
+    matrix.data[1][1] = 1.0f;
+    matrix.data[1][2] = 4.0f;
+
+    matrix.data[2][0] = 5.0f;
+    matrix.data[2][1] = 6.0f;
+    matrix.data[2][2] = 0.0f;
+
+    aerosim::Matrix3 inverse = matrix.inverse();
+    aerosim::Matrix3 identity = matrix * inverse;
+
+    std::cout << "Original:\n";
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            std::cout << matrix.data[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    std::cout << "\nInverse:\n";
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            std::cout << inverse.data[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    std::cout << "\nMatrix * Inverse:\n";
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            std::cout << identity.data[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+        
 
     return 0;
 }

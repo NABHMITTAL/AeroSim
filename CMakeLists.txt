@@ -16,4 +16,6 @@ add_executable(AeroSIM
     src/core/Application.h
     src/math/vector3.cpp
     src/math/vector3.h
+    src/math/matrix3.cpp
+    src/math/matrix3.h
 )

@@ -16,7 +16,9 @@ namespace aerosim{
     Vector3 normalized() const;
     float dot(const Vector3& other) const;
     Vector3 cross(const Vector3& other) const;
-
+    float distanceSquared(const Vector3& other) const;
+    float distance(const Vector3& other) const;
+    float angleBetween(const Vector3& other) const;
   };
   
 }
