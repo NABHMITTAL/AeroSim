@@ -26,4 +26,6 @@ add_executable(AeroSIM
     src/math/eularAngles.h
     src/math/quaternion.cpp
     src/math/quaternion.h
+    src/math/transforms.cpp
+    src/math/transforms.h
 )

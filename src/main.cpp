@@ -1,101 +1,57 @@
 #include <iostream>
-#include "math/quaternion.h"
-#include "math/vector3.h"
+#include <iomanip>
+#include <cmath>
 
-using namespace aerosim;
-
-void printVector(const Vector3& v) {
-    std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ")\n";
-}
-
-void printQuaternion(const Quaternion& q) {
-    std::cout << "("
-              << q.w << ", "
-              << q.x << ", "
-              << q.y << ", "
-              << q.z << ")\n";
-}
+#include "math/transforms.h"
 
 int main() {
+    using namespace aerosim;
 
-    constexpr float PI = 3.14159265358979323846f;
+    std::cout << std::fixed << std::setprecision(3);
 
-    // =========================
-    // Quaternion
-    // =========================
+    Transform transform;
 
-    Quaternion q{1, 2, 3, 4};
+    // Transform setup
+    transform.translate({10.0f, 5.0f, 0.0f});
+    transform.scaleUScaleD({2.0f, 2.0f, 2.0f});
 
-    std::cout << "=== Quaternion ===\n";
+    // 90 degree rotation around Z
+    float angle = 3.14159265359f / 2.0f;
 
-    std::cout << "q: ";
-    printQuaternion(q);
+    Quaternion rotation(
+        std::cos(angle / 2.0f),
+        0.0f,
+        0.0f,
+        std::sin(angle / 2.0f)
+    );
 
-    std::cout << "Magnitude: "
-              << q.magnitude() << "\n";
+    transform.rotate(rotation);
 
-    std::cout << "Normalized: ";
-    printQuaternion(q.normalized());
+    // Original local point
+    Vector3 localPoint{1.0f, 0.0f, 0.0f};
 
+    // Local -> World
+    Vector3 worldPoint = transform.localToWorld(localPoint);
 
-    // =========================
-    // Quaternion multiplication
-    // =========================
+    // World -> Local
+    Vector3 recoveredLocal = transform.worldToLocal(worldPoint);
 
-    Quaternion q1{1, 2, 3, 4};
-    Quaternion q2{5, 6, 7, 8};
+    std::cout << "=== Coordinate Conversion ===\n";
 
-    std::cout << "\n=== Quaternion Multiplication ===\n";
+    std::cout << "Original local point: ("
+              << localPoint.x << ", "
+              << localPoint.y << ", "
+              << localPoint.z << ")\n";
 
-    std::cout << "q1 * q2: ";
-    printQuaternion(q1 * q2);
+    std::cout << "World point: ("
+              << worldPoint.x << ", "
+              << worldPoint.y << ", "
+              << worldPoint.z << ")\n";
 
-
-    // =========================
-    // 90 degree rotations
-    // =========================
-
-    std::cout << "\n=== Quaternion Rotation ===\n";
-
-    // 90 degrees around Z
-    Quaternion zRotation{
-        std::cos(PI / 4.0f),
-        0,
-        0,
-        std::sin(PI / 4.0f)
-    };
-
-    Vector3 xAxis{1, 0, 0};
-
-    std::cout << "X axis rotated 90 degrees around Z: ";
-    printVector(zRotation.rotate(xAxis));
-
-
-    // 90 degrees around Y
-    Quaternion yRotation{
-        std::cos(PI / 4.0f),
-        0,
-        std::sin(PI / 4.0f),
-        0
-    };
-
-    std::cout << "X axis rotated 90 degrees around Y: ";
-    printVector(yRotation.rotate(xAxis));
-
-
-    // 90 degrees around X
-    Quaternion xRotation{
-        std::cos(PI / 4.0f),
-        std::sin(PI / 4.0f),
-        0,
-        0
-    };
-
-    Vector3 yAxis{0, 1, 0};
-
-    std::cout << "Y axis rotated 90 degrees around X: ";
-    printVector(xRotation.rotate(yAxis));
-
+    std::cout << "Recovered local point: ("
+              << recoveredLocal.x << ", "
+              << recoveredLocal.y << ", "
+              << recoveredLocal.z << ")\n";
 
     return 0;
 }

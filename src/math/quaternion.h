@@ -12,5 +12,6 @@
     Quaternion normalized() const;
     float magnitude() const;
     Vector3 rotate(const Vector3& vector) const;
+    Quaternion conjugate() const;
   };
  }

@@ -2,6 +2,76 @@
 
 All notable changes to AeroSIM are documented here.
 
+## v0.1.4
+
+### Added
+
+### conjugate() function in Quaternion
+
+#### Transform System
+
+Added the initial 3D Transform system combining:
+
+* Position
+* Quaternion rotation
+* Scale
+
+Default identity values are:
+
+[
+P=(0,0,0),\qquad Q=(1,0,0,0),\qquad S=(1,1,1)
+]
+
+Added Transform operations for:
+
+* Translation
+* Rotation
+* Scale modification
+
+### Coordinate-Space Conversion
+
+Added local-to-world conversion using:
+
+[
+p_W=Q(p_L\odot S)+P
+]
+
+A local point is first scaled, then rotated, and finally translated into world space.
+
+Added world-to-local conversion using the inverse operation:
+
+[
+p_L=Q^{-1}(p_W-P)\odot S^{-1}
+]
+
+Translation is reversed first, followed by inverse rotation and inverse scale.
+
+For normalized quaternions, the inverse rotation is obtained through the quaternion conjugate:
+
+[
+Q^{-1}=Q^*
+]
+
+### Testing
+
+Added runtime tests verifying:
+
+* Transform identity values
+* Translation
+* Scale modification
+* Quaternion rotation
+* Local → World conversion
+* World → Local conversion
+* Local → World → Local round-trip conversion
+
+The coordinate conversion tests successfully recover the original local-space point after transforming it into world space and back.
+
+### Notes
+
+This establishes the basic mathematical Transform layer required for future geometry and scene-hierarchy systems.
+
+---
+
 ## [0.1.3] - 2026-08-13
 
 ### Added

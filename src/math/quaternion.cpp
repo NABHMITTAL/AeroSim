@@ -61,4 +61,10 @@ namespace aerosim{
     };
   }
 
+  Quaternion Quaternion::conjugate() const{
+    return{
+      w,-x,-y,-z
+    };
+  }
+
 }
