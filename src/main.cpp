@@ -1,57 +1,67 @@
 #include <iostream>
 #include <iomanip>
-#include <cmath>
 
-#include "math/transforms.h"
+#include "math/numerical.h"
 
 int main() {
     using namespace aerosim;
 
-    std::cout << std::fixed << std::setprecision(3);
+    std::cout << std::boolalpha;
 
-    Transform transform;
+    const float absTol = 0.00001f;
+    const float relTol = 0.0001f;
 
-    // Transform setup
-    transform.translate({10.0f, 5.0f, 0.0f});
-    transform.scaleUScaleD({2.0f, 2.0f, 2.0f});
+    std::cout << "=== Numerical Foundations ===\n\n";
 
-    // 90 degree rotation around Z
-    float angle = 3.14159265359f / 2.0f;
+    std::cout << "1. Exactly equal:\n";
+    std::cout << approximatelyEqual(
+        1.0f, 1.0f, absTol, relTol
+    ) << "\n\n";
 
-    Quaternion rotation(
-        std::cos(angle / 2.0f),
-        0.0f,
-        0.0f,
-        std::sin(angle / 2.0f)
-    );
+    std::cout << "2. Small difference:\n";
+    std::cout << approximatelyEqual(
+        1.0f, 1.000001f, absTol, relTol
+    ) << "\n\n";
 
-    transform.rotate(rotation);
+    std::cout << "3. Difference outside tolerance:\n";
+    std::cout << approximatelyEqual(
+        1.0f, 1.1f, absTol, relTol
+    ) << "\n\n";
 
-    // Original local point
-    Vector3 localPoint{1.0f, 0.0f, 0.0f};
+    std::cout << "4. Near zero:\n";
+    std::cout << approximatelyEqual(
+        0.000001f, 0.000002f, absTol, relTol
+    ) << "\n\n";
 
-    // Local -> World
-    Vector3 worldPoint = transform.localToWorld(localPoint);
+    std::cout << "5. Large values:\n";
+    std::cout << approximatelyEqual(
+        1000000.0f, 1000000.05f, absTol, relTol
+    ) << "\n\n";
 
-    // World -> Local
-    Vector3 recoveredLocal = transform.worldToLocal(worldPoint);
+    std::cout << "6. Large difference:\n";
+    std::cout << approximatelyEqual(
+        1000000.0f, 1000100.0f, absTol, relTol
+    ) << "\n\n";
 
-    std::cout << "=== Coordinate Conversion ===\n";
+    std::cout << "7. Floating-point example:\n";
 
-    std::cout << "Original local point: ("
-              << localPoint.x << ", "
-              << localPoint.y << ", "
-              << localPoint.z << ")\n";
+    float a = 0.1f;
+    float b = 0.2f;
+    float expected = 0.3f;
+    float result = a + b;
 
-    std::cout << "World point: ("
-              << worldPoint.x << ", "
-              << worldPoint.y << ", "
-              << worldPoint.z << ")\n";
+    std::cout << std::setprecision(10);
 
-    std::cout << "Recovered local point: ("
-              << recoveredLocal.x << ", "
-              << recoveredLocal.y << ", "
-              << recoveredLocal.z << ")\n";
+    std::cout << "0.1 + 0.2 = " << result << "\n";
+    std::cout << "Expected   = " << expected << "\n";
+    std::cout << "Approximately equal: "
+              << approximatelyEqual(
+                     result,
+                     expected,
+                     absTol,
+                     relTol
+                 )
+              << "\n";
 
     return 0;
 }

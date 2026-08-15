@@ -2,6 +2,22 @@
 
 All notable changes to AeroSIM are documented here.
 
+## v0.2.0
+
+### Added
+
+#### Numerical Foundations
+
+Completed the initial numerical foundation required for future physics and simulation systems.
+
+Added an `approximatelyEqual()` utility for comparing floating-point values using both absolute and relative tolerance.
+
+The comparison is based on:
+
+|a - b| <= absoluteTolerance + relativeTolerance * max(|a|, |b|)
+
+---
+
 ## v0.1.4
 
 ### Added

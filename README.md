@@ -18,9 +18,9 @@ AeroSIM is planned to eventually support:
 
 ## Current Status
 
-AeroSIM is currently in its **mathematical foundation stage**.
+AeroSIM has completed its **mathematical and numerical foundation stage** and is moving into geometry development.
 
-The current focus is building and testing the low-level mathematics that future geometry, physics, and simulation systems will depend on.
+The current focus has been building and testing the low-level mathematics and numerical tools that future geometry, physics, and simulation systems will depend on.
 
 ### Math Foundation
 
@@ -104,23 +104,17 @@ The basic 3D Transform system is complete.
 
 A Transform contains three fundamental quantities:
 
-* **Position** — a Vector3 representing world position
+* **Position** — a Vector3 representing position
 * **Rotation** — a Quaternion representing orientation
 * **Scale** — a Vector3 representing scale along each local axis
 
 The identity Transform is:
 
-[
-P=(0,0,0)
-]
-
-[
-Q=(1,0,0,0)
-]
-
-[
-S=(1,1,1)
-]
+```text
+P = (0, 0, 0)
+Q = (1, 0, 0, 0)
+S = (1, 1, 1)
+```
 
 This represents an object at the origin, with no rotation and its original size.
 
@@ -134,59 +128,122 @@ A Transform supports:
 
 ### Transform Mathematics
 
-Transforming a local-space point into world space follows three operations:
+Transforming a local-space point into world space consists of three operations.
 
 **1. Scale**
 
-[
-p_S=p_L\odot S
-]
+```text
+pS = pL ⊙ S
+```
 
 The local point is multiplied component-by-component by the scale.
 
 **2. Rotate**
 
-[
-p_R=Q(p_S)
-]
+```text
+pR = Q(pS)
+```
 
 The scaled point is rotated using the Transform's quaternion.
 
 **3. Translate**
 
-[
-p_W=p_R+P
-]
+```text
+pW = pR + P
+```
 
 The object's position is added to obtain the final world-space point.
 
-The complete operation is therefore:
+The complete local-to-world transformation is therefore:
 
-[
-\boxed{p_W=Q(p_L\odot S)+P}
-]
+```text
+pW = Q(pL ⊙ S) + P
+```
 
 The reverse operation converts a world-space point back into local space:
 
-[
-\boxed{p_L=Q^{-1}(p_W-P)\odot S^{-1}}
-]
+```text
+pL = Q⁻¹(pW - P) ⊙ S⁻¹
+```
 
-This works by reversing the original operations: translation is undone first, followed by rotation and then scale.
+The operations are reversed when converting from world space back to local space:
 
-For normalized quaternions:
+```text
+World point
+    ↓
+Undo translation
+    ↓
+Undo rotation
+    ↓
+Undo scale
+    ↓
+Local point
+```
 
-[
-Q^{-1}=Q^*
-]
+For a normalized quaternion, the inverse rotation can be obtained from its conjugate:
 
-where (Q^*) is the quaternion conjugate.
+```text
+Q⁻¹ = Q*
+```
+
+where `Q*` is the quaternion conjugate.
 
 The coordinate conversion system has been verified using round-trip tests where a local point is transformed into world space and then converted back to its original local coordinates.
 
 Rotation matrices use **radians** and follow the **standard right-handed coordinate convention**.
 
 All currently implemented mathematical operations are verified through runtime tests.
+
+### Numerical Foundations
+
+The initial numerical foundation is complete.
+
+AeroSIM uses finite-precision floating-point numbers, meaning that many real numbers cannot be represented exactly in binary. Small representation and rounding errors are therefore unavoidable in numerical computing.
+
+These errors can accumulate over repeated calculations and simulation steps, so numerical comparisons should not always rely on exact floating-point equality.
+
+AeroSIM provides an `approximatelyEqual()` utility that compares floating-point values using both absolute and relative tolerance.
+
+The comparison is based on:
+
+```text
+|a - b| <= absoluteTolerance + relativeTolerance * max(|a|, |b|)
+```
+
+**Absolute tolerance** provides a fixed error allowance and is particularly useful when values are close to zero.
+
+**Relative tolerance** scales the allowed error according to the magnitude of the values, making comparisons more useful across different numerical ranges.
+
+The purpose is not to eliminate floating-point error, but to provide a consistent way of determining whether two calculated values are sufficiently close for a particular numerical operation.
+
+The numerical foundation has been verified through runtime tests covering:
+
+* Exact equality
+* Small floating-point differences
+* Near-zero values
+* Large values
+* Values outside the selected tolerance
+* Floating-point representation behavior such as `0.1 + 0.2`
+
+The numerical foundation will support future work involving physics calculations, simulation timesteps, interpolation, and numerical integration.
+
+## Foundation Status
+
+The mathematical and numerical foundation is now complete.
+
+The current foundation contains:
+
+* Vector2
+* Vector3
+* Matrix2
+* Matrix3
+* Euler rotations
+* Quaternions
+* Transforms
+* Local/world coordinate conversion
+* Floating-point numerical comparison
+
+These systems form the low-level mathematical base for the higher-level systems that will follow.
 
 ## Development
 
@@ -210,4 +267,4 @@ Visualization
 GPU Acceleration
 ```
 
-The mathematics layer is intentionally being built before the geometry and simulation systems so that later systems can rely on tested and understandable foundations.
+The mathematics and numerical layers are intentionally being built and tested before the geometry and simulation systems so that later systems can rely on a tested and understandable foundation.

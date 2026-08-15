@@ -28,4 +28,6 @@ add_executable(AeroSIM
     src/math/quaternion.h
     src/math/transforms.cpp
     src/math/transforms.h
+    src/math/numerical.cpp
+    src/math/numerical.h
 )
