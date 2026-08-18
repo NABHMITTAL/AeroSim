@@ -18,15 +18,83 @@ AeroSIM is planned to eventually support:
 
 ## Current Status
 
-AeroSIM has completed its **mathematical and numerical foundation stage** and is moving into geometry development.
+AeroSIM has completed its **mathematical and numerical foundation stage** and has begun development of the **Core architecture**.
 
-The current focus has been building and testing the low-level mathematics and numerical tools that future geometry, physics, and simulation systems will depend on.
+The mathematical foundation provides the low-level geometry and numerical tools required by future systems, while the Core layer is beginning to establish application lifecycle, configuration, logging, and event infrastructure.
+
+### Core Foundation
+
+The initial Core foundation is now in development.
+
+#### Application
+
+The `Application` system provides the basic application lifecycle.
+
+It currently supports:
+
+* Application construction and destruction
+* Application startup
+* Application runtime entry point
+* Application shutdown
+
+The current lifecycle is intentionally simple and will become the central coordinator for AeroSIM's subsystems.
+
+#### Configuration
+
+The `Configuration` system provides centralized storage for application and subsystem settings.
+
+Configuration values are stored using string keys and support several basic value types:
+
+* `int`
+* `float`
+* `bool`
+* `std::string`
+
+Example configuration values include:
+
+```text
+application.name
+simulation.timestep
+core.workerThreads
+renderer.vsync
+```
+
+The configuration system uses `std::variant` internally so a single configuration container can safely store different supported value types.
+
+Typed access is provided through templates, allowing values to be retrieved as their expected C++ type.
+
+#### Logging
+
+The initial logging system provides basic runtime information from the Core layer.
+
+Logging is used to communicate important application lifecycle events such as initialization, runtime startup, and shutdown.
+
+The logging system will eventually be expanded into a more structured system supporting different severity levels and subsystem-specific messages.
+
+#### Event System
+
+The initial event foundation has been implemented.
+
+Events are represented using an event type enumeration and an `Event` object containing the type of event that occurred.
+
+The current event system supports:
+
+* Event type identification
+* Event objects
+* Event type retrieval
+* Basic event dispatching
+
+The initial dispatcher checks whether an event matches a requested event type.
+
+The current implementation is intentionally minimal and will later be extended with event handlers and callback-based dispatch.
 
 ### Math Foundation
 
+The mathematical foundation is complete.
+
 #### Vector3
 
-The initial 3D vector implementation is complete.
+The 3D vector implementation is complete.
 
 Supports:
 
@@ -116,7 +184,7 @@ Q = (1, 0, 0, 0)
 S = (1, 1, 1)
 ```
 
-This represents an object at the origin, with no rotation and its original size.
+This represents an object at the origin, with no rotation, and its original size.
 
 A Transform supports:
 
@@ -231,7 +299,7 @@ The numerical foundation will support future work involving physics calculations
 
 The mathematical and numerical foundation is now complete.
 
-The current foundation contains:
+The current low-level foundation contains:
 
 * Vector2
 * Vector3
@@ -243,7 +311,38 @@ The current foundation contains:
 * Local/world coordinate conversion
 * Floating-point numerical comparison
 
-These systems form the low-level mathematical base for the higher-level systems that will follow.
+The initial Core foundation now contains:
+
+* Application lifecycle
+* Configuration
+* Logging
+* Event types
+* Event objects
+* Basic event dispatching
+
+These systems form the low-level foundation for the higher-level systems that will follow.
+
+## Architecture
+
+AeroSIM's current architecture is being developed around clear subsystem boundaries:
+
+```text
+Application
+    |
+    +-- Core
+    |
+    +-- Math
+    |
+    +-- Geometry
+    |
+    +-- Simulation
+    |
+    +-- Rendering
+    |
+    +-- Compute
+```
+
+The Core layer is intended to provide common application infrastructure without depending on a specific physics or simulation solver.
 
 ## Development
 
@@ -253,6 +352,8 @@ The planned development direction is:
 
 ```text
 Mathematics
+    ↓
+Core
     ↓
 Geometry
     ↓
@@ -267,4 +368,6 @@ Visualization
 GPU Acceleration
 ```
 
-The mathematics and numerical layers are intentionally being built and tested before the geometry and simulation systems so that later systems can rely on a tested and understandable foundation.
+The mathematics and numerical layers were intentionally built and tested before higher-level systems so that later systems can rely on a tested and understandable foundation.
+
+The Core layer is now being developed using the same principle: build small, understandable systems, verify them with runtime tests, and expand the architecture only when the underlying concepts are understood.

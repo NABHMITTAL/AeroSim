@@ -2,6 +2,80 @@
 
 All notable changes to AeroSIM are documented here.
 
+## v0.2.1
+
+### Added
+
+#### Core Application
+
+Started the Core architecture required to provide the backbone for AeroSIM's future subsystems.
+
+Added the initial `Application` class with:
+
+* Application construction
+* Application destruction
+* Application runtime entry point
+* Basic startup and shutdown flow
+
+#### Configuration
+
+Added the initial `Configuration` system for storing application and subsystem settings.
+
+Configuration values are stored using string keys and support:
+
+* `int`
+* `float`
+* `bool`
+* `std::string`
+
+Added typed configuration retrieval using templates.
+
+Example configuration keys include:
+
+application.name
+simulation.timestep
+core.workerThreads
+renderer.vsync
+
+
+#### Logging
+
+Added initial runtime logging for application lifecycle events, including initialization, runtime startup, and shutdown.
+
+#### Event System
+
+Added the initial event foundation.
+
+Added `eventType` using `enum class` to represent different event categories.
+
+Added the `Event` class for storing and retrieving an event's type.
+
+Added the initial `EventDispatcher` for checking whether an event matches a requested event type.
+
+The dispatcher currently performs basic type matching and will be extended with event handlers in future Core development.
+
+### Verified
+
+#### Core Runtime
+
+Verified application initialization, execution, and shutdown.
+
+#### Configuration
+
+Verified storage and typed retrieval of:
+
+* `std::string`
+* `int`
+* `float`
+* `bool`
+
+#### Events
+
+Verified event creation, event type retrieval, and basic event dispatching.
+
+---
+
+
 ## v0.2.0
 
 ### Added
@@ -88,7 +162,7 @@ This establishes the basic mathematical Transform layer required for future geom
 
 ---
 
-## [0.1.3] - 2026-08-13
+## v0.1.3
 
 ### Added
 
@@ -115,7 +189,7 @@ This establishes the basic mathematical Transform layer required for future geom
 
 ---
 
-## [0.1.2] - Vector2 and Matrix2
+## v0.1.2 - Vector2 and Matrix2
 
 ### Added
 
@@ -151,7 +225,7 @@ This establishes the basic mathematical Transform layer required for future geom
 
 ---
 
-## [0.1.1] - Matrix3
+## v0.1.1 - Matrix3
 
 ### Added
 
@@ -174,7 +248,7 @@ This establishes the basic mathematical Transform layer required for future geom
 
 ---
 
-## [0.1.0] - Initial Release
+## v0.1.0 - Initial Release
 
 ### Added
 

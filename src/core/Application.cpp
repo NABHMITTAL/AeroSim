@@ -1,19 +1,26 @@
 #include "Application.h"
-
 #include <iostream>
+#include "logger.h"
 
-namespace aerosim{
+namespace aerosim {
 
-  Application::Application(){
-    
-  }
+    Application::Application() {
 
-  Application::~Application(){
+    }
 
-  }
+    Application::~Application() {
 
-  void Application::run(){
-      std::cout << "AeroSIM application running.\n";
-  }
+    }
+
+    void Application::initialize() {
+      Logger::info("AeroSim Initializing...");
+    }
+    void Application::run() {
+      Logger::info("AeroSIM application running...");
+    }
+    void Application::shutDown() {
+      Logger::info("AeroSIM Shutting Down...");
+
+    }
 
 }

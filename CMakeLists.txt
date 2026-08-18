@@ -14,6 +14,15 @@ add_executable(AeroSIM
     src/main.cpp
     src/core/Application.cpp
     src/core/Application.h
+    src/core/logger.h
+    src/core/logger.cpp
+    src/core/Configuration.cpp
+    src/core/Configuration.h
+    src/core/Event.cpp
+    src/core/Event.h
+    src/core/EventDispatcher.h
+    src/core/EventDispatcher.cpp
+    
     src/math/vector3.cpp
     src/math/vector3.h
     src/math/matrix3.cpp

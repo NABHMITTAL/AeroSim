@@ -4,10 +4,12 @@ namespace aerosim{
 
   class Application{
   public:
-      Application();
-      ~Application();
+    Application();
+    ~Application();
 
-      void run();
+    void initialize();
+    void run();
+    void shutDown();
   };
 
 }
