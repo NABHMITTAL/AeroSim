@@ -2,6 +2,67 @@
 
 All notable changes to AeroSIM are documented here.
 
+## v0.3.0
+
+### Added
+
+#### Core Runtime Foundation
+
+Completed **Milestone 2 — Core Runtime Foundation**.
+
+Implemented and verified:
+
+* Application lifecycle
+* Configuration system
+* Logging
+* Event system
+* Timing
+* Fixed timestep management
+* Floating-point numerical comparison
+
+Added fixed-timestep time management using a `TimeAccumulator` with a fixed timestep of `0.01` seconds.
+
+The accumulator supports:
+
+* Accumulating elapsed real time
+* Detecting when a simulation step is available
+* Consuming fixed simulation steps
+* Preserving remaining accumulated time
+* Performing multiple simulation steps when sufficient time has accumulated
+
+#### Memory Management Strategy
+
+Established AeroSIM's initial C++ memory-management strategy.
+
+The project will:
+
+* Prefer stack allocation for ordinary local objects
+* Use `std::unique_ptr` for exclusive ownership
+* Use `std::shared_ptr` only when genuine shared ownership is required
+* Use references or non-owning pointers for non-owning access
+* Avoid unnecessary manual `new`/`delete`
+
+Custom memory allocators are deferred until concrete simulation requirements justify them.
+
+### Deferred
+
+The following systems were intentionally deferred:
+
+* Resource management
+* Entity/component architecture
+* Threading foundation
+* Job/task system
+* Module boundaries
+
+These systems will be introduced when later geometry, physics, simulation, and visualization systems create concrete requirements for them.
+
+### Milestone
+
+**v0.3.0 marks the completion of AeroSIM's second major development milestone.**
+
+The core runtime foundation is now complete and the project is ready to move into **Geometry development**.
+
+
 ## v0.2.1
 
 ### Added

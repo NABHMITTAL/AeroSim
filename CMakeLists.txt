@@ -22,7 +22,11 @@ add_executable(AeroSIM
     src/core/Event.h
     src/core/EventDispatcher.h
     src/core/EventDispatcher.cpp
-    
+    src/core/Time.h
+    src/core/Time.cpp
+    src/core/timeAccumulator.cpp
+    src/core/timeAccumulator.h
+
     src/math/vector3.cpp
     src/math/vector3.h
     src/math/matrix3.cpp

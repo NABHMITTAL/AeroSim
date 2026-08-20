@@ -1,21 +1,51 @@
-#include "core/EventDispatcher.h"
+#include "core/Time.h"
+#include "core/TimeAccumulator.h"
 
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 int main()
 {
-    aerosim::Event event(aerosim::eventType::WindowClose);
+    aerosim::Time timer;
+    aerosim::TimeAccumulator accumulator;
 
-    aerosim::EventDispatcher dispatcher(event);
+    double previousTime = timer.elapsedSeconds();
 
-    bool handled = dispatcher.dispatch(
-        aerosim::eventType::WindowClose
-    );
+    int physicsSteps = 0;
 
-    std::cout << "Event handled: "
-        << std::boolalpha
-        << handled
-        << '\n';
+    for (int i = 0; i < 100; i++)
+    {
+        std::this_thread::sleep_for(
+            std::chrono::milliseconds(5)
+        );
+
+        double currentTime = timer.elapsedSeconds();
+
+        double deltaTime = currentTime - previousTime;
+
+        previousTime = currentTime;
+
+        accumulator.timeAdder(deltaTime);
+
+        while (accumulator.checker())
+        {
+            physicsSteps++;
+
+            accumulator.consumer();
+
+            std::cout << "Physics step: "
+                    << physicsSteps
+                    << " | Excess time: "
+                    << accumulator.getAccumulatedTime()
+                    << " seconds\n";
+        }
+    }
+
+    std::cout << "Total physics steps: "
+              << physicsSteps
+              << "\n"
+              << accumulator.getAccumulatedTime();
 
     return 0;
 }

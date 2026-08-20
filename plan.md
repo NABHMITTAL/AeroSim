@@ -154,7 +154,7 @@ Create the backbone that every subsystem will use.
 * Event system
 * Timing
 * Time step management
-* Resource management
+* Resource management (To be Done later)
 * Memory management strategy
 * Entity/component strategy if required
 * Threading foundation
