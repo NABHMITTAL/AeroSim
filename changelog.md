@@ -2,6 +2,110 @@
 
 All notable changes to AeroSIM are documented here.
 
+## v0.3.1
+
+### Added
+
+#### Geometry Foundation
+
+Started the initial Geometry foundation for Milestone 3.
+
+Added the first mesh representation and basic geometric data types:
+
+* `Vertex`
+* `Edge`
+* `Face`
+* `Surface`
+* `Mesh`
+
+#### Indexed Mesh Representation
+
+Established an indexed mesh representation where the `Mesh` owns the actual geometry data and topology structures reference existing elements using indices.
+
+The current structure is:
+
+```text
+Mesh
+├── vertices
+├── edges
+├── faces
+└── surfaces
+```
+
+`Vertex` stores its position using `Vector3`.
+
+`Edge` references two vertices using vertex indices.
+
+`Face` references an ordered collection of vertex indices.
+
+`Surface` references an ordered collection of face indices.
+
+This allows multiple faces and surfaces to share the same underlying vertices without duplicating vertex data.
+
+#### Basic Mesh Verification
+
+Added runtime tests for the indexed mesh representation.
+
+The test constructs a square from four vertices and two triangular faces:
+
+```text
+Face 0 → [0, 1, 2]
+Face 1 → [1, 3, 2]
+```
+
+The test verifies that:
+
+* Four vertices can be stored in a mesh.
+* Faces can reference vertices by index.
+* Multiple faces can share vertices.
+* Face indices correctly resolve back to the corresponding vertex positions.
+
+### Architecture
+
+The initial Geometry data model establishes the foundation for future mesh operations and topology systems.
+
+The distinction between geometry and topology is now explicit:
+
+```text
+Vertex
+    ↓
+Position data
+
+Edge
+    ↓
+Vertex relationships
+
+Face
+    ↓
+Polygonal surface defined by vertex indices
+
+Surface
+    ↓
+Collection of faces
+
+Mesh
+    ↓
+Owns the complete geometry representation
+```
+
+### Milestone Progress
+
+Milestone 3 — Geometry has begun.
+
+Completed:
+
+* Basic `Vertex`
+* Basic `Edge`
+* Basic `Triangle`
+* Basic `Face`
+* Basic `Surface`
+* Basic `Mesh`
+* Indexed vertex/face relationships
+* Initial mesh runtime verification
+
+The next development stage is **Mesh Operations**, beginning with vertex manipulation.
+
+
 ## v0.3.0
 
 ### Added

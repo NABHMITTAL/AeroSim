@@ -1,51 +1,83 @@
-#include "core/Time.h"
-#include "core/TimeAccumulator.h"
-
 #include <iostream>
-#include <thread>
-#include <chrono>
+
+#include "geometry/Mesh.h"
 
 int main()
 {
-    aerosim::Time timer;
-    aerosim::TimeAccumulator accumulator;
+    aerosim::Mesh mesh;
 
-    double previousTime = timer.elapsedSeconds();
+    // --------------------
+    // Add 4 vertices
+    // --------------------
 
-    int physicsSteps = 0;
+    mesh.vertices.push_back({{0.0, 0.0, 0.0}}); // 0
+    mesh.vertices.push_back({{1.0, 0.0, 0.0}}); // 1
+    mesh.vertices.push_back({{0.0, 1.0, 0.0}}); // 2
+    mesh.vertices.push_back({{1.0, 1.0, 0.0}}); // 3
 
-    for (int i = 0; i < 100; i++)
+
+    // --------------------
+    // Add 2 triangular faces
+    // --------------------
+
+    mesh.faces.push_back({{0, 1, 2}});
+    mesh.faces.push_back({{1, 3, 2}});
+
+
+    // --------------------
+    // Print vertices
+    // --------------------
+
+    std::cout << "Vertices: "
+              << mesh.vertices.size() << '\n';
+
+    for (std::size_t i = 0; i < mesh.vertices.size(); ++i)
     {
-        std::this_thread::sleep_for(
-            std::chrono::milliseconds(5)
-        );
+        const auto& position = mesh.vertices[i].vertexPos;
 
-        double currentTime = timer.elapsedSeconds();
-
-        double deltaTime = currentTime - previousTime;
-
-        previousTime = currentTime;
-
-        accumulator.timeAdder(deltaTime);
-
-        while (accumulator.checker())
-        {
-            physicsSteps++;
-
-            accumulator.consumer();
-
-            std::cout << "Physics step: "
-                    << physicsSteps
-                    << " | Excess time: "
-                    << accumulator.getAccumulatedTime()
-                    << " seconds\n";
-        }
+        std::cout << "Vertex " << i
+                  << ": ("
+                  << position.x << ", "
+                  << position.y << ", "
+                  << position.z << ")\n";
     }
 
-    std::cout << "Total physics steps: "
-              << physicsSteps
-              << "\n"
-              << accumulator.getAccumulatedTime();
 
-    return 0;
+    // --------------------
+    // Print faces
+    // --------------------
+
+    std::cout << "\nFaces: "
+              << mesh.faces.size() << '\n';
+
+    for (std::size_t i = 0; i < mesh.faces.size(); ++i)
+    {
+        std::cout << "Face " << i << ": ";
+
+        for (std::size_t vertexIndex : mesh.faces[i].vertices)
+        {
+            std::cout << vertexIndex << ' ';
+        }
+
+        std::cout << '\n';
+    }
+
+
+    // --------------------
+    // Verify the indices
+    // --------------------
+
+    std::cout << "\nFace 0 uses:\n";
+
+    for (std::size_t vertexIndex : mesh.faces[0].vertices)
+    {
+        const auto& vertex = mesh.vertices[vertexIndex];
+
+        std::cout << "Vertex "
+                  << vertexIndex
+                  << " -> ("
+                  << vertex.vertexPos.x << ", "
+                  << vertex.vertexPos.y << ", "
+                  << vertex.vertexPos.z << ")\n";
+    }
 }

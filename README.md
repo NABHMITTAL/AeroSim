@@ -18,11 +18,13 @@ AeroSIM is planned to eventually support:
 
 ## Current Status
 
-AeroSIM has completed its **mathematical, numerical, and Core runtime foundation stages** and is now moving into **Geometry development**.
+AeroSIM has completed its **mathematical, numerical, and Core runtime foundation stages** and has now begun **Geometry development**.
 
 The mathematical foundation provides the low-level geometry and numerical tools required by future systems, while the Core layer provides the application and runtime infrastructure required by higher-level systems.
 
 **v0.3.0 marks the completion of Milestone 2 — Core Runtime Foundation.**
+
+**Milestone 3 — Geometry is now in progress.**
 
 ### Core Foundation
 
@@ -273,7 +275,9 @@ The identity Transform is:
 
 ```text
 P = (0, 0, 0)
+
 Q = (1, 0, 0, 0)
+
 S = (1, 1, 1)
 ```
 
@@ -388,9 +392,221 @@ The numerical foundation has been verified through runtime tests covering:
 
 The numerical foundation will support future work involving physics calculations, simulation timesteps, interpolation, and numerical integration.
 
+## Geometry Foundation
+
+Milestone 3 has now begun with the implementation of the initial mesh and geometry representation.
+
+The first Geometry foundation contains:
+
+* Vertex
+* Edge
+* Triangle
+* Face
+* Surface
+* Mesh
+
+### Basic Geometry
+
+#### Vertex
+
+A `Vertex` represents a single point in 3D space.
+
+The current implementation stores:
+
+```text
+vertexPos : Vector3
+```
+
+The `Vertex` type intentionally remains minimal. Additional per-vertex attributes such as normals, tangents, texture coordinates, or other data will be introduced when required by later mesh operations.
+
+#### Edge
+
+An `Edge` represents a connection between two vertices.
+
+Edges use vertex indices rather than storing copies of `Vertex` objects.
+
+Conceptually:
+
+```text
+Edge → [vertexIndexA, vertexIndexB]
+```
+
+This allows multiple edges to reference the same underlying vertices.
+
+#### Triangle
+
+A `Triangle` represents a three-sided geometric primitive consisting of three vertices.
+
+Triangles are intended to provide a basic geometric primitive for future operations such as:
+
+* Area calculation
+* Normal calculation
+* Geometric intersection tests
+* Surface analysis
+* Mesh triangulation
+
+A triangle is treated as a geometric primitive, while a `Face` represents a polygonal surface within mesh topology.
+
+#### Face
+
+A `Face` represents one polygonal surface of a mesh.
+
+Faces store an ordered collection of vertex indices rather than copies of vertices.
+
+For example:
+
+```text
+Face → [0, 1, 2]
+```
+
+means that the face uses vertices `0`, `1`, and `2` from the owning mesh.
+
+The ordering of indices is significant because it establishes the winding order of the face and will later determine surface orientation and normal direction.
+
+Faces can therefore represent triangles, quads, or other polygons.
+
+#### Surface
+
+A `Surface` represents a collection of faces.
+
+Surfaces store face indices rather than copies of `Face` objects.
+
+Conceptually:
+
+```text
+Surface → [faceIndex0, faceIndex1, ...]
+```
+
+This provides a higher-level grouping of connected or logically related mesh faces.
+
+#### Mesh
+
+The `Mesh` acts as the primary owner of the geometry data.
+
+The current mesh contains:
+
+```text
+Mesh
+├── vertices
+├── edges
+├── faces
+└── surfaces
+```
+
+Vertices contain actual position data, while edges, faces, and surfaces describe relationships using indices.
+
+This establishes an indexed mesh representation where shared geometry does not need to be duplicated.
+
+### Indexed Mesh Representation
+
+AeroSIM uses indices to describe relationships between mesh elements.
+
+For example:
+
+```text
+Mesh vertices:
+
+0 → A
+1 → B
+2 → C
+3 → D
+```
+
+Two triangular faces can then be represented as:
+
+```text
+Face 0 → [0, 1, 2]
+Face 1 → [1, 3, 2]
+```
+
+Both faces can reference the same vertices without creating duplicate `Vertex` objects.
+
+This provides an important foundation for future topology and geometry operations.
+
+### Mesh Verification
+
+The initial mesh representation has been verified through runtime testing.
+
+A simple square was constructed from four vertices and two triangular faces:
+
+```text
+0 ───────── 1
+│          /│
+│        /  │
+│      /    │
+│    /      │
+│  /        │
+2 ───────── 3
+```
+
+The test verified:
+
+* Four vertices can be stored in a mesh.
+* Faces can reference vertices by index.
+* Multiple faces can share vertices.
+* Face indices correctly resolve to the corresponding vertex positions.
+
+The successful test confirms that the initial indexed mesh representation is functioning as intended.
+
+## Geometry Development
+
+Milestone 3 is being developed incrementally.
+
+The current plan is:
+
+```text
+Basic Geometry
+      ↓
+Mesh Operations
+      ↓
+Topology
+      ↓
+Geometry Editing
+      ↓
+Import / Export
+```
+
+### Mesh Operations
+
+Planned mesh operations include:
+
+* Vertex manipulation
+* Face manipulation
+* Normals
+* Tangents
+* Bounding volumes
+* Mesh transformations
+
+### Topology
+
+Planned topology systems include:
+
+* Adjacency
+* Neighbour relationships
+* Surface connectivity
+* Boundary detection
+
+### Geometry Editing
+
+Planned editing operations include:
+
+* Move
+* Rotate
+* Scale
+* Extrude
+* Subdivide
+* Transform
+* Surface modification
+
+### Import / Export
+
+AeroSIM will eventually support common 3D geometry formats.
+
+Import/export will be developed after the internal mesh representation is sufficiently mature to provide a stable target for external geometry data.
+
 ## Foundation Status
 
-The mathematical and numerical foundation is now complete.
+The mathematical and numerical foundation is complete.
 
 The current low-level foundation contains:
 
@@ -416,6 +632,17 @@ The Core foundation now contains:
 * Fixed timestep management
 * Initial memory-management strategy
 
+The Geometry foundation now contains:
+
+* Vertex
+* Edge
+* Triangle
+* Face
+* Surface
+* Mesh
+* Indexed vertex/face relationships
+* Initial mesh runtime verification
+
 These systems form the low-level foundation for the higher-level systems that will follow.
 
 ## Architecture
@@ -439,6 +666,8 @@ Application
 ```
 
 The Core layer provides common application infrastructure without depending on a specific physics or simulation solver.
+
+The Geometry layer provides the representation and manipulation of aerodynamic geometry that will eventually be consumed by physics, aerodynamics, simulation, rendering, and compute systems.
 
 The architecture is intentionally being developed incrementally. Systems are introduced when they provide a concrete benefit rather than being created solely to satisfy a predetermined architecture.
 
@@ -470,6 +699,10 @@ The mathematics and numerical layers were intentionally built and tested before 
 
 The Core layer was developed using the same principle: build small, understandable systems, verify them with runtime tests, and expand the architecture only when the underlying concepts are understood.
 
-**Milestone 2 is now complete.**
+Geometry development follows the same approach. The initial mesh representation is being established and verified before adding more complex topology, editing, and import/export systems.
 
-The next major development phase is **Geometry**.
+**Milestone 2 is complete.**
+
+**Milestone 3 — Geometry is now in progress.**
+
+The next immediate development stage is **Mesh Operations**, beginning with vertex manipulation.

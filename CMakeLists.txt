@@ -43,4 +43,12 @@ add_executable(AeroSIM
     src/math/transforms.h
     src/math/numerical.cpp
     src/math/numerical.h
+
+    src/geometry/vertex.cpp
+    src/geometry/vertex.h
+    src/geometry/edge.cpp
+    src/geometry/edge.h
+    src/geometry/triangle.h
+    src/geometry/face.h
+    src/geometry/surface.h
 )

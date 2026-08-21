@@ -58,13 +58,13 @@ Establish the development environment and project infrastructure.
 ## Completion Criteria
 
 ```text
-[ ] Project builds
-[ ] Project runs
-[ ] Git repository works
-[ ] CMake configuration works
-[ ] Debug build works
-[ ] Release build works
-[ ] Basic project architecture established
+[X] Project builds
+[X] Project runs
+[X] Git repository works
+[X] CMake configuration works
+[X] Debug build works
+[X] Release build works
+[X] Basic project architecture established
 ```
 
 ---
@@ -130,12 +130,12 @@ Everything else depends on this phase.
 ## Completion Criteria
 
 ```text
-[ ] Math library works
-[ ] Unit tests exist
-[ ] Operations validated against known results
-[ ] Numerical edge cases tested
-[ ] No renderer dependency
-[ ] No simulation dependency
+[X] Math library works
+[X] Unit tests exist
+[X] Operations validated against known results
+[X] Numerical edge cases tested
+[X] No renderer dependency
+[X] No simulation dependency
 ```
 
 ---
